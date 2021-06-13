@@ -3,6 +3,7 @@ const { db, dbQuery, createToken } = require('../config')
 module.exports = {
     login: async (request, response, next) => {
         try {
+            // console.log('Login')
             let email = request.body.email
             let password = request.body.password
             if (email && password) {

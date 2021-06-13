@@ -4,14 +4,17 @@ const port = 4000
 const cors = require('cors')
 const bearerToken = require('express-bearer-token')
 
-const { authRouter, jobTaskRouter, posisiRouter } = require('./routers')
+app.use(cors())
+app.use(bearerToken())
+app.use(express.json())
+
+const { authRouter, jobTaskRouter, posisiRouter, pegawaiRouter } = require('./routers')
 const { db } = require('./config/database')
 app.use('/auth', authRouter)
 app.use('/jobtask', jobTaskRouter)
 app.use('/posisi', posisiRouter)
-app.use(cors())
-app.use(bearerToken())
-app.use(express.json())
+app.use('/pegawai', pegawaiRouter)
+
 
 app.get('/', (require, response) => {
     response.send('Hello!')

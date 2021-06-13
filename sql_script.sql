@@ -1,14 +1,4 @@
-SELECT * FROM karyawan.posisi;
+SELECT * FROM karyawan.posisi_pegawai;
 
-WITH RECURSIVE posisi_path (id, posisi, path) AS
-(
-  SELECT idposisi, posisi, posisi as path
-    FROM posisi
-    WHERE parentId IS NULL
-  UNION ALL
-  SELECT c.idposisi, c.posisi, CONCAT(cp.path, ' > ', c.posisi)
-    FROM posisi_path AS cp JOIN posisi AS c
-      ON cp.id = c.parentId
-)
-SELECT * FROM posisi_path
-ORDER BY path;
+SELECT pegawai.idpegawai, fullName, email, telp, posisi FROM pegawai JOIN posisi_pegawai ON pegawai.idpegawai = posisi_pegawai.idpegawai JOIN posisi 
+ON posisi_pegawai.idposisi = posisi.idposisi WHERE posisi = 'Owner';
