@@ -43,7 +43,7 @@ module.exports = {
             console.log('read', request.user.idrole)
             // console.log('params', request.params.id)
             if (request.user.idrole == 1) {
-                let queryUpdate = `UPDATE pegawai SET ? WHERE (idpegawai = (SELECT idpegawai WHERE fullName = ${db.escape(request.body.fullName)}))`
+                let queryUpdate = `UPDATE pegawai SET ? WHERE (idpegawai = (SELECT idpegawai WHERE email = ${db.escape(request.body.email)}))`
                 let result = await dbQuery(queryUpdate, request.body)
                 response.status(200).send(result)
             }

@@ -10,6 +10,12 @@ module.exports = {
             let deadline = db.escape(request.body.deadline)
             // date format is ISO Date <"2021-09-01">
             if (auth == 1 || auth == 2) {
+                let queryCheck = `SELECT idtask FROM job_task WHERE idpegawai = ${idpegawai}`
+                let resultqueryCheck = await dbQuery(queryCheck)
+                console.log(resultqueryCheck.length)
+                if (resultqueryCheck.length > 0) {
+                    response.status(200).send('Pegawai already have a job!')
+                }
                 let queryJobTask = `INSERT INTO job_task (idpegawai, jobtask, deadline) VALUES (${idpegawai}, ${jobtask}, ${deadline})`
                 let result = await dbQuery(queryJobTask)
                 response.status(200).send(result)
@@ -26,7 +32,7 @@ module.exports = {
             console.log(request.user)
             let auth  = request.user.idrole
             if (auth == 1 || auth == 2) {
-                let queryJobTask = `SELECT fullName, jobtask FROM pegawai JOIN job_task ON pegawai.idpegawai = job_task.idpegawai WHERE idpegawai = ${request.params.id};`
+                let queryJobTask = `SELECT fullName, jobtask FROM pegawai JOIN job_task ON pegawai.idpegawai = job_task.idpegawai WHERE pegawai.idpegawai = ${request.params.id};`
                 let getData = await dbQuery(queryJobTask)
                 response.status(200).send(getData)
             }
