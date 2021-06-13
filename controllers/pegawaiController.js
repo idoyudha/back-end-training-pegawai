@@ -19,7 +19,7 @@ module.exports = {
                 await dbQuery(queryPosisiPegawai)
                 response.status(200).send({message: "Success create data pegawai"})
             }
-
+            response.status(401).send('User not authorize')
         } 
         catch (error) {
             next(error)

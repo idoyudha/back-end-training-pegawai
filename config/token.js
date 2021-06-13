@@ -1,4 +1,3 @@
-const { request } = require('express')
 const jwt = require('jsonwebtoken')
 
 module.exports = {
@@ -6,15 +5,13 @@ module.exports = {
         return jwt.sign(payload, "karyawan")
     },
 
-    readToken: (require, response, next) => {
-        console.log('Request read token',request.token)
+    readToken: (request, response, next) => {
+        console.log('Request read token', request.token)
         jwt.verify(require.token, 'karyawan', (error, decoded) => {
             if (error) {
-                return response.status(401).send('User not authorize')
+                return response.status(401).send('Token Error: user not authorized')
             }
-
             request.user = decoded 
-
             next()
         })
     }

@@ -14,6 +14,7 @@ module.exports = {
                 let result = await dbQuery(queryJobTask)
                 response.status(200).send(result)
             }
+            response.status(401).send('User not authorize')
         } 
         catch (error) {
             next(error)
@@ -22,11 +23,22 @@ module.exports = {
 
     readJobTask: async (request, response, next) => {
         try {
-            if (request.params.id) {
+            console.log(request.user)
+            let auth  = request.user.idrole
+            if (auth == 1 || auth == 2) {
                 let queryJobTask = `SELECT fullName, jobtask FROM pegawai JOIN job_task ON pegawai.idpegawai = job_task.idpegawai WHERE idpegawai = ${request.params.id};`
                 let getData = await dbQuery(queryJobTask)
                 response.status(200).send(getData)
             }
+            response.status(401).send('User not authorize')
+        } 
+        catch (error) {
+            next(error)
+        }
+    },
+
+    readAllJobTask: async (request, response, next) => {
+        try {
             let queryJobTask = `SELECT fullName, jobtask FROM pegawai JOIN job_task ON pegawai.idpegawai = job_task.idpegawai;`
             let getData = await dbQuery(queryJobTask)
             response.status(200).send(getData)
@@ -45,6 +57,7 @@ module.exports = {
                 let result = await dbQuery(queryUpdate, request.body)
                 response.status(200).send(result)
             }
+            response.status(401).send('User not authorize')
         } 
         catch (error) {
             next(error)
@@ -64,6 +77,7 @@ module.exports = {
                 let result = await dbQuery(queryDelete)
                 response.status(200).send(result)
             }
+            response.status(401).send('User not authorize')
         } 
         catch (error) {
             next(error)

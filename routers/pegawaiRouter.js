@@ -4,7 +4,7 @@ const { readToken } = require('../config')
 
 router.get('/get', readToken, pegawaiController.readDataPegawai)
 router.post('/create', readToken, pegawaiController.createDataPegawai)
-router.patch('/update/', readToken, pegawaiController.updateDataPegawai)
+router.patch('/update', readToken, pegawaiController.updateDataPegawai)
 router.delete('/delete/:id', readToken, pegawaiController.deleteDataPegawai)
 
 module.exports = router
