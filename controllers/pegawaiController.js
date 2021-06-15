@@ -28,10 +28,21 @@ module.exports = {
 
     readDataPegawai: async (request, response, next) => {
         try {
-            console.log('read', request.user.idrole)
-            let queryData = `SELECT fullName, email, telp, status, name as role, jobtask, deadline as jobtask_deadline FROM pegawai JOIN role ON pegawai.idrole = role.idrole JOIN job_task on job_task.idpegawai = pegawai.idpegawai`
-            let getData = await dbQuery(queryData)
-            response.status(200).send(getData)
+            // console.log('read', request.user)
+            let queryPegawai = `SELECT pegawai.idpegawai, fullName, email, telp, status, name as role FROM pegawai JOIN role ON pegawai.idrole = role.idrole`
+            let queryJobTask = `SELECT * FROM job_task`
+            let DataPegawai = await dbQuery(queryPegawai)
+            let DataJobTask = await dbQuery(queryJobTask)
+            // console.log(getDataPegawai, getDataJobTask)
+            DataPegawai.forEach(elementP => {
+                elementP.jobtask = []
+                DataJobTask.forEach(elementJ => {
+                    if (elementP.idpegawai == elementJ.idpegawai) {
+                        elementP.jobtask.push(elementJ)
+                    }
+                });
+            });
+            response.status(200).send(DataPegawai)
         } 
         catch (error) {
             next(error)
