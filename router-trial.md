@@ -28,14 +28,13 @@ URL = **http://localhost:4000**
   "email": "mamad@mail.com",
   "telp": "086777550001",
   "password": "mamad123",
-  "idrole": 3,
-  "idposisi": 5
+  "idrole": 3
 }
 
 4. Delete **/delete/:id**
 :(id)
 
-# Jobtask --- Token Error: user not authorized
+# Jobtask
 1. Create **/jobtask/create** 
 {
   "idpegawai": 5,
