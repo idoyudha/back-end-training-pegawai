@@ -29,7 +29,7 @@ module.exports = {
     readDataPegawai: async (request, response, next) => {
         try {
             console.log('read', request.user.idrole)
-            let queryData = `SELECT fullName, email, telp, status, name as role FROM pegawai JOIN role ON pegawai.idrole = role.idrole`
+            let queryData = `SELECT fullName, email, telp, status, name as role, jobtask, deadline as jobtask_deadline FROM pegawai JOIN role ON pegawai.idrole = role.idrole JOIN job_task on job_task.idpegawai = pegawai.idpegawai`
             let getData = await dbQuery(queryData)
             response.status(200).send(getData)
         } 
